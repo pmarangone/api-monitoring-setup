@@ -1,0 +1,47 @@
+name: prometheus-monitoring4
+services:
+    prometheus:
+        image: docker.io/prom/prometheus:v3.1.0
+        container_name: prometheus3
+        ports:
+          - 9090:9090
+        command: "--config.file=/etc/prometheus/prometheus.yaml"
+        volumes:
+          - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+          - prometheus-data:/prometheus
+        restart: unless-stopped
+        networks:
+          - monitoring-network
+
+    grafana:
+      image: docker.io/grafana/grafana-oss:11.5.1
+      container_name: grafana3
+      ports:
+        - "3000:3000"
+      volumes:
+        - grafana-data:/var/lib/grafana
+      restart: unless-stopped
+      networks:
+        - monitoring-network
+
+    sentiment-analysis:
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      container_name: sentiment-analysis-server3
+      ports:
+        - "8000:8000"
+      env_file:
+      - .env
+      networks:
+        - monitoring-network
+
+volumes:
+  prometheus-data:
+    driver: local
+  grafana-data:
+    driver: local
+
+networks:
+  monitoring-network:
+    driver: bridge

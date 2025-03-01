@@ -3,11 +3,10 @@ from __future__ import annotations
 import logging
 import os
 from contextlib import asynccontextmanager
-from typing import Annotated, AsyncGenerator, Optional
+from typing import Annotated, AsyncGenerator
 
-import aiomcache
 import asyncpg
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import Depends, FastAPI
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -79,7 +78,7 @@ async def lifespan(app: FastAPI):
 
         yield
     except Exception:
-        logger.exception(f"Failed to create database pool")
+        logger.exception("Failed to create database pool")
         raise
     finally:
         # Shutdown: close all connections

@@ -1,19 +1,15 @@
 import datetime
 import logging
-import time
 import uuid
 
-import aiomcache
-import orjson
 from asyncpg import PostgresError
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse, PlainTextResponse
-from prometheus_client import make_asgi_app
 from pydantic import BaseModel
 
 from db import PostgresDep, lifespan
 from metrics_route import metrics_router, monitor_requests
-from prometheus_labels import H_POSTGRES_INSERT_DEVICE, H_POSTGRES_SELECT_DEVICE
+from repository import repo_create_device, select_create_device
 
 app = FastAPI(lifespan=lifespan)
 
@@ -49,13 +45,9 @@ async def create_device(device: DeviceRequest, conn: PostgresDep):
             RETURNING id;
         """
 
-        start_time = time.perf_counter()
-
-        row = await conn.fetchrow(
-            insert_query, device_uuid, device.mac, device.firmware, now, now
+        row = await repo_create_device(
+            conn, insert_query, device_uuid, device.mac, device.firmware, now, now
         )
-
-        H_POSTGRES_INSERT_DEVICE.observe(time.perf_counter() - start_time)
 
         if not row:
             raise HTTPException(
@@ -89,9 +81,7 @@ async def get_devices(conn: PostgresDep):
     try:
         query = "SELECT id, uuid, mac, firmware, created_at, updated_at FROM fastapi_device;"
 
-        start_time = time.perf_counter()
-        rows = await conn.fetch(query)
-        H_POSTGRES_SELECT_DEVICE.observe(time.perf_counter() - start_time)
+        rows = await select_create_device(conn, query)
 
         return [
             {

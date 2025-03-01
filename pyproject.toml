@@ -53,3 +53,8 @@ dependencies = [
     "watchfiles==1.0.3",
     "websockets==14.1",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.9.9",
+]

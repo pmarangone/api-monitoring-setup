@@ -23,6 +23,7 @@ orjson==3.10.13
 packaging==24.2
 prometheus-fastapi-instrumentator==7.0.0
 prometheus_client==0.21.1
+psutil>=7.0.0
 psycopg==3.2.3
 psycopg-binary==3.2.3
 psycopg-pool==3.2.4
