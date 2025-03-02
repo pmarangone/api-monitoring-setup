@@ -24,7 +24,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ceeme538hlla8b"
+        "uid": "eeemeqnh68mwwd"
       },
       "fieldConfig": {
         "defaults": {
@@ -147,7 +147,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ceeme538hlla8b"
+        "uid": "eeemeqnh68mwwd"
       },
       "fieldConfig": {
         "defaults": {
@@ -267,7 +267,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ceeme538hlla8b"
+        "uid": "eeemeqnh68mwwd"
       },
       "fieldConfig": {
         "defaults": {
@@ -1495,8 +1495,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1610,8 +1609,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1760,8 +1758,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1929,13 +1926,13 @@
     "list": []
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "2st Test",
   "uid": "d97e3767-asde3235cb",
-  "version": 2,
+  "version": 1,
   "weekStart": ""
 }
