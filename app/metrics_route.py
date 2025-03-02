@@ -2,7 +2,7 @@ import time
 from fastapi import APIRouter, Request, Response
 from prometheus_client import CONTENT_TYPE_LATEST, REGISTRY, generate_latest
 
-from metrics import REQUEST_COUNT, REQUEST_LATENCY, update_system_metrics
+from .metrics import REQUEST_COUNT, REQUEST_LATENCY, update_system_metrics
 
 
 metrics_router = APIRouter(prefix="/metrics")

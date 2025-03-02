@@ -1,23 +1,12 @@
-FROM python:3.13.1-slim-bookworm AS build
+FROM python:3.11-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-WORKDIR /app
-
-RUN pip install --upgrade pip
-COPY ./requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
-
-FROM python:3.13.1-slim-bookworm
-
-ENV PYTHONUNBUFFERED=1
-
-WORKDIR /app
-
-COPY --from=build /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
-COPY --from=build /usr/local/bin /usr/local/bin
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 COPY . /app
 
-CMD ["gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--timeout", "60", "--graceful-timeout", "60",  "--log-level", "error", "main:app",  "--bind", "0.0.0.0:8000"]
+WORKDIR /app
+RUN uv sync --frozen --no-cache
+
+EXPOSE 8000
+
+CMD ["/app/.venv/bin/gunicorn", "-w", "1", "-k", "uvicorn.workers.UvicornWorker", "--timeout", "60", "--graceful-timeout", "60",  "--log-level", "error", "app.main:app",  "--bind", "0.0.0.0:8000"]

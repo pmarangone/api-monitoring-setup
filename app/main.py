@@ -7,9 +7,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import ORJSONResponse, PlainTextResponse
 from pydantic import BaseModel
 
-from db import PostgresDep, lifespan
-from metrics_route import metrics_router, monitor_requests
-from repository import repo_create_device, select_create_device
+from .db import PostgresDep, lifespan
+from .metrics_route import metrics_router, monitor_requests
+from .repository import repo_create_device, select_create_device
 
 app = FastAPI(lifespan=lifespan)
 

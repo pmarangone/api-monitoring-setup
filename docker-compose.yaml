@@ -1,25 +1,25 @@
 name: prometheus-monitoring4
 services:
     prometheus:
-        image: docker.io/prom/prometheus:v3.1.0
-        container_name: prometheus3
-        ports:
-          - 9090:9090
-        command: "--config.file=/etc/prometheus/prometheus.yaml"
-        volumes:
-          - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
-          - prometheus-data:/prometheus
-        restart: unless-stopped
-        networks:
-          - monitoring-network
+      image: docker.io/prom/prometheus:v3.1.0 # Changed to 'latest' for simplicity or specify a desired version
+      container_name: prometheus-v04
+      ports:
+        - 9090:9090
+      command: "--config.file=/etc/prometheus/prometheus.yaml --storage.tsdb.path=/prometheus" # Added storage path
+      volumes:
+        - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+        - prometheus:/prometheus
+      restart: unless-stopped
+      networks:
+        - monitoring-network
 
     grafana:
       image: docker.io/grafana/grafana-oss:11.5.1
-      container_name: grafana3
+      container_name: grafana-v04
       ports:
         - "3000:3000"
       volumes:
-        - grafana-data:/var/lib/grafana
+        - grafana:/var/lib/grafana
       restart: unless-stopped
       networks:
         - monitoring-network
@@ -28,7 +28,7 @@ services:
       build:
         context: ./
         dockerfile: Dockerfile
-      container_name: sentiment-analysis-server3
+      container_name: sentiment-analysis-server-v04
       ports:
         - "8000:8000"
       env_file:
@@ -37,10 +37,8 @@ services:
         - monitoring-network
 
 volumes:
-  prometheus-data:
-    driver: local
-  grafana-data:
-    driver: local
+  prometheus:
+  grafana:
 
 networks:
   monitoring-network:

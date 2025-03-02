@@ -1,4 +1,4 @@
-from decorators import monitor_db_operation
+from .decorators import monitor_db_operation
 
 
 @monitor_db_operation(operation="insert_device")
