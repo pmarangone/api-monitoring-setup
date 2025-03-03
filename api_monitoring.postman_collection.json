@@ -75,7 +75,7 @@
 			"response": []
 		},
 		{
-			"name": "metrics",
+			"name": "Server metrics",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -100,6 +100,56 @@
 					"port": "8000",
 					"path": [
 						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cadvisor metrics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/metrics",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"metrics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add log to loki",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"streams\": [\r\n      {\r\n        \"stream\": {\r\n          \"label\": \"foo\"\r\n        },\r\n        \"values\": [\r\n            [ \"1741011809000000000\", \"Foo bar baz\" ],\r\n            [ \"1741011809000000004\", \"Foo bar baz\" ],\r\n            [ \"1741011809000000003\", \"Foo bar baz\" ],\r\n            [ \"1741011809000000002\", \"Foo bar baz\" ],\r\n            [ \"1741011809000000005\", \"Foo bar baz\" ],\r\n            [ \"1741011809000000006\", \"Foo bar baz\" ],\r\n            [ \"1741011809000000001\", \"Biz baz boz\" ]\r\n        ]\r\n      }\r\n    ]\r\n  }\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3100/loki/api/v1/push",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3100",
+					"path": [
+						"loki",
+						"api",
+						"v1",
+						"push"
 					]
 				}
 			},
