@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from .db import PostgresDep, lifespan
 from .metrics_route import metrics_router, monitor_requests_middleware
 from .repository import repo_create_device, select_create_device
-from .logging import get_logger
+from .logger import get_logger
 
 app = FastAPI(lifespan=lifespan)
 

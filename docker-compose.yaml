@@ -7,7 +7,7 @@ services:
         - 9090:9090
       command: "--config.file=/etc/prometheus/prometheus.yaml --storage.tsdb.path=/prometheus" # Added storage path
       volumes:
-        - ./prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
+        - ./configs/prometheus.yaml:/etc/prometheus/prometheus.yaml:ro
         - prometheus:/prometheus
       restart: unless-stopped
       networks:
