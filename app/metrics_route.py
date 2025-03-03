@@ -14,7 +14,7 @@ async def metrics():
     return Response(generate_latest(REGISTRY), media_type=CONTENT_TYPE_LATEST)
 
 
-async def monitor_requests(request: Request, call_next):
+async def monitor_requests_middleware(request: Request, call_next):
     method = request.method
     path = request.url.path
 
