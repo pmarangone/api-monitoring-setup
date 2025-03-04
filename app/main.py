@@ -1,3 +1,4 @@
+import time
 import datetime
 import uuid
 
@@ -110,3 +111,10 @@ async def get_devices(conn: PostgresDep):
             status_code=500,
             detail="An unexpected error occurred while retrieving devices",
         )
+
+
+@app.get("/slow", response_class=PlainTextResponse)
+async def slow():
+    time.sleep(3)
+
+    return "OK"
