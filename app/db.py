@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import logging
 import os
 from contextlib import asynccontextmanager
 from typing import Annotated, AsyncGenerator
@@ -8,8 +7,9 @@ from typing import Annotated, AsyncGenerator
 import asyncpg
 from fastapi import Depends, FastAPI
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from app.logger import get_logger
+
+logger = get_logger(__name__)
 
 
 POSTGRES_URI = POSTGRES_URI = os.environ["POSTGRES_URI"]
@@ -36,10 +36,10 @@ class Database:
 
             return Database(pool)
         except asyncpg.exceptions.PostgresError as e:
-            logging.error(f"Error creating PostgreSQL connection pool: {e}")
+            logger.error(f"Error creating PostgreSQL connection pool: {e}")
             raise ValueError("Failed to create PostgreSQL connection pool")
         except Exception as e:
-            logging.error(f"Unexpected error while creating connection pool: {e}")
+            logger.error(f"Unexpected error while creating connection pool: {e}")
             raise
 
     @asynccontextmanager
@@ -70,7 +70,7 @@ PostgresDep = Annotated[asyncpg.Connection, Depends(get_db)]
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifespan context manager for database connection"""
-    print(" Starting up database connection...")
+    logger.info(" Starting up database connection...")
     try:
         global db
         db = await Database.from_postgres()
