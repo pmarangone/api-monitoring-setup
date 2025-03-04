@@ -287,6 +287,14 @@ REQUEST_COUNT = Counter(
     "http_request_total", "Total HTTP Requests", labelnames=("method", "status", "path")
 )
 
+REQUEST_SIZE_HISTOGRAM = Histogram(
+    "request_size_bytes", "Size of incoming requests in bytes"
+)
+RESPONSE_SIZE_HISTOGRAM = Histogram(
+    "response_size_bytes", "Size of outgoing responses in bytes"
+)
+
+
 # System metrics
 CPU_USAGE = Gauge("process_cpu_usage", "Current CPU usage in percent")
 MEMORY_USAGE = Gauge("process_memory_usage_bytes", "Current memory usage in bytes")
