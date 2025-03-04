@@ -11,7 +11,7 @@ async def repo_create_device(conn, query, *args):
 
 
 @monitor_db_operation(operation="select_device")
-async def select_create_device(conn, query, *args):
+async def repo_select_device(conn, query, *args):
     """
     Function to execute a database insert query and return the result row.
     """

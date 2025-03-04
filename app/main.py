@@ -9,7 +9,7 @@ from pydantic import BaseModel
 
 from .db import PostgresDep, lifespan
 from .metrics_route import metrics_router, monitor_requests_middleware
-from .repository import repo_create_device, select_create_device
+from .repository import repo_create_device, repo_select_device
 from .logger import get_logger
 
 app = FastAPI(lifespan=lifespan)
@@ -84,7 +84,7 @@ async def get_devices(conn: PostgresDep):
         logger.info("Selecting devices")
         query = "SELECT id, uuid, mac, firmware, created_at, updated_at FROM fastapi_device;"
 
-        rows = await select_create_device(conn, query)
+        rows = await repo_select_device(conn, query)
 
         return [
             {
