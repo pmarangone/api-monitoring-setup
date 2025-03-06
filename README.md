@@ -28,6 +28,7 @@
 
 - Ensure Loki is working, http://localhost:3100/ready
 - Ensure Prometheus is scrapping the server, http://localhost:9090/targets
+- Manually setup pg_stat_statements. See notes/pg_stat_statements
 - Import dashboard to grafana, http://localhost:3000/dashboard/import
 - Benchmark server with Jmeter. See jmeter_benchmark/ 
-- Monitor database schemas with pg_stats_statements. See notes/pg_stats_statements
+- Monitor database schemas with pg_stat_statements. See notes/pg_stat_statements
