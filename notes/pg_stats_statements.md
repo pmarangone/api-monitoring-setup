@@ -18,3 +18,20 @@ ORDER BY 3 DESC
 LIMIT 500;
 
 ```
+
+
+Add pg_stats_statements extension
+
+
+```bash
+docker exec -it postgres-v06 bash
+```
+
+```bash
+echo "shared_preload_libraries=pg_stat_statements" >> var/lib/postgresql/data/postgresql.conf
+```
+
+```sql
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements;
+SELECT calls, query FROM pg_stat_statements LIMIT 1;
+```

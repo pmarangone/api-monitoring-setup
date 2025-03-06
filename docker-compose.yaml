@@ -1,8 +1,8 @@
-name: prometheus-monitoring-v05
+name: prometheus-monitoring-v06
 services:
     prometheus:
       image: docker.io/prom/prometheus:v3.1.0 # Changed to 'latest' for simplicity or specify a desired version
-      container_name: prometheus-v05
+      container_name: prometheus-v06
       ports:
         - 9090:9090
       command: "--config.file=/etc/prometheus/prometheus.yaml --storage.tsdb.path=/prometheus" # Added storage path
@@ -15,7 +15,7 @@ services:
 
     grafana:
       image: docker.io/grafana/grafana-oss:11.5.1
-      container_name: grafana-v05
+      container_name: grafana-v06
       ports:
         - "3000:3000"
       volumes:
@@ -26,7 +26,7 @@ services:
 
     # node-exporter:
     #   image: prom/node-exporter:latest
-    #   container_name: node-exporter-v05
+    #   container_name: node-exporter-v06
     #   ports:
     #     - "9100:9100"
     #   restart: unless-stopped
@@ -43,7 +43,7 @@ services:
 
     # cadvisor:
     #   image: gcr.io/cadvisor/cadvisor:latest
-    #   container_name: cadvisor-v05
+    #   container_name: cadvisor-v06
     #   ports:
     #     - 8080:8080
     #   volumes:
@@ -64,7 +64,7 @@ services:
       build:
         context: ./
         dockerfile: Dockerfile
-      container_name: sentiment-analysis-server-v05
+      container_name: sentiment-analysis-server-v06
       ports:
         - "8000:8000"
       env_file:
@@ -76,7 +76,7 @@ services:
 
     loki:
       image: grafana/loki:latest
-      container_name: loki-v05
+      container_name: loki-v06
       volumes:
         - ./configs/loki.yaml:/etc/loki/config.yaml:ro
         - data_loki:/loki:rw
@@ -85,6 +85,23 @@ services:
       restart: unless-stopped
       networks:
         - monitoring-network
+
+    postgres:
+      container_name: postgres-v06
+      image: postgres:latest
+      environment:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PW}
+        - POSTGRES_DB=${POSTGRES_DB} 
+      ports:
+        - "5432:5432"
+      restart: always
+      networks:
+        - monitoring-network
+      # volumes:
+      # - /var/lib/postgresql/data
+      # If you don't want to set it manually, uncomment the following
+      # command: postgres -c shared_preload_libraries=pg_stat_statements
 
 volumes:
   prometheus:

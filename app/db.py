@@ -17,6 +17,7 @@ POSTGRES_POOL_SIZE = int(os.environ["POSTGRES_POOL_SIZE"])
 
 
 class Database:
+    # https://wiki.python.org/moin/UsingSlots
     __slots__ = ("_pool",)
 
     def __init__(self, pool: asyncpg.Pool):
